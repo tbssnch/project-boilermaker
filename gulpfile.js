@@ -1,3 +1,11 @@
+// after you clone this repo, do this in terminal in this order!!!
+// npm install
+// bower install
+// gulp bower
+// gulp serve
+// gulp build
+
+
 //variables dependencies//
 var gulp = require('gulp');
 var browserify = require('browserify');
@@ -7,10 +15,7 @@ var uglify = require('gulp-uglify');
 var utilities = require('gulp-util');
 var del = require('del');
 var jshint = require('gulp-jshint');
-var browserSync = require('browser-sync').create();
 var buildProduction = utilities.env.production;
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
 var lib = require('bower-files')({
   "overrides":{
     "bootstrap": {
@@ -22,6 +27,9 @@ var lib = require('bower-files')({
     }
   }
 });
+var browserSync = require('browser-sync').create();
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 //linter to run on all files in js folder//
 gulp.task('jshint', function(){
   return gulp.src(['js/*.js'])
@@ -88,7 +96,7 @@ gulp.task('serve', function() {
   gulp.watch(['js/*.js'], ['jsBuild']);
   gulp.watch(['bower.json'], ['bowerBuild']);
   gulp.watch(['*.html'], ['htmlBuild']);
-  gulp.watch("scss/*.scss", ['cssBuild']);
+  gulp.watch(["scss/*.scss", "scss/**/*.scss"], ['cssBuild']);
 });
 //subtasks for gulp watch to reload the server//
 gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function(){
